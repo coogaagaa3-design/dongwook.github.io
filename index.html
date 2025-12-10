@@ -1,4 +1,4 @@
-HTML
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -150,24 +150,53 @@ HTML
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             align-items: flex-start;
+            text-align: center; /* 그리드 내의 전체 텍스트 중앙 정렬 */
+        }
+
+        /* 텍스트 블록 중앙 정렬 */
+        .text-block {
+            text-align: center;
         }
 
         .text-block p {
             margin-bottom: 20px;
             font-size: 1.1rem;
+            text-align: center; /* 문단 텍스트 중앙 정렬 */
         }
 
         .text-block strong {
             color: var(--primary);
         }
+        
+        /* === LIFE 섹션 카드 스타일 (추가됨) === */
+        .life-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            flex: 1;
+            transition: transform 0.3s;
+        }
 
-        /* 카드 스타일 */
+        .life-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .life-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        /* ==================================== */
+
+
+        /* 카드 스타일 (Tech 섹션) */
         .card-container {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
             margin-bottom: 40px;
+            text-align: center;
         }
 
         .card {
@@ -321,10 +350,14 @@ HTML
             gap: 30px;
             align-items: flex-start;
             margin-bottom: 40px;
+            text-align: center; /* 성장 스토리 컨테이너 내부 중앙 정렬 */
         }
-
         .growth-story-text {
             flex: 3;
+            text-align: center; /* 텍스트 블록 중앙 정렬 */
+        }
+        .growth-story-text p {
+             text-align: center; /* 텍스트 중앙 정렬 */
         }
 
         .growth-story-image-wrap {
@@ -345,6 +378,7 @@ HTML
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center; /* 카드 내용 중앙 정렬 */
         }
         .resilience-card-full h3 {
             color: var(--primary);
@@ -371,22 +405,31 @@ HTML
                 font-size: 2rem; /* h1 폰트 크기 대폭 축소 */
                 margin-top: 0;
             } 
-            .hero p { font-size: 1.1rem; } 
+            .hero p { 
+                font-size: 1.1rem;
+                text-align: center; /* 모바일 Hero p 중앙 정렬 */
+            } 
             .tagline { font-size: 0.9rem; }
             
             /* 2열 그리드를 1열로 강제 변경 */
             .content-grid { 
                 grid-template-columns: 1fr; 
                 gap: 30px;
+                text-align: center;
             }
-            .card {
+            .text-block p {
+                text-align: center; /* 모바일 문단 텍스트 중앙 정렬 */
+            }
+            .card, .life-card { /* life-card도 모바일에서 min-width 100% 적용 */
                 min-width: 100%;
+                text-align: center;
             }
             
             /* 성장 스토리 수직 정렬 */
             .growth-story-container {
                 flex-direction: column;
                 gap: 20px;
+                text-align: center;
             }
             .growth-story-image-wrap {
                 max-width: 100%; 
@@ -527,12 +570,12 @@ Developing the AI-based resource matching system inspired by the sharing fridge.
 <section id="life">
 <h2>🎨 Art and Connection</h2>
 <div class="content-grid">
-<div class="text-block">
+<div class="text-block life-card">
 <h3>Joy in Friendship and Learning</h3>
 <p>I’ve had a close group of friends since elementary school. We still have pajama parties and talk about our worries and dreams. Some of my friends started aiming to study abroad, and that meant needing better grades.</p>
 <p>When one of them was struggling with math, I gave him a math workbook as a birthday present, and we started studying together. Since I attend a different school with a different exam schedule, I prepared and printed practice materials for my friends to help them study. We studied together at a local café, and their hard work **inspired me as well**. The memories we made through studying are more than just academic—are cherished parts of my life.</p>
 </div>
-<div class="text-block">
+<div class="text-block life-card">
 <h3>Artistic Freedom</h3>
 <p>My mother is an **artist**, and from a young age, my brother and I were surrounded by creative experiences. When we were little, we wore firefighter costumes and played games where we used water guns to **"put out fires" we had drawn on the bathroom walls**.</p>
 <p>As we got older, my mother ordered large canvases that filled our living room, and over several months, we each completed a personal artwork. I became fascinated by drawing faces. She taught me that different artists can express the same face in entirely different ways. Through her guidance, I learned to appreciate **freedom in expression and the beauty of individual style**.</p>
@@ -568,7 +611,8 @@ Developing the AI-based resource matching system inspired by the sharing fridge.
 "I hope to grow into someone who embraces my own color<br>and gives back what I’ve learned to others."
 </div>
 <p style="max-width: 600px; margin: 0 auto; color: #666;">
-I want to attend a school where diverse thoughts are respected, where I can grow by learning and taking on new challenges with others. I believe this school will help me shape my story into something even greater.</p>
+I want to attend a school where diverse thoughts are respected, where I can grow by learning and taking on new challenges with others. I believe this school will help me shape my story into something even greater.
+</p>
 </section>
 
 <footer>
