@@ -1,9 +1,16 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dongwook Ham | Story of Growth, Code, and Art</title>
+
+    <meta property="og:title" content="Dongwook Ham | Art and Connection">
+    <meta property="og:description" content="자유로운 표현과 성장을 담은 포트폴리오입니다.">
+    <meta property="og:image" content="art_3.jpg"> 
+    <meta property="og:url" content="https://www.dongwookham.com/">
     <style>
         /* 기본 설정 */
         :root {
@@ -52,7 +59,7 @@
         .hero {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
-            height: 60vh; /* 데스크탑 크기 유지 */
+            height: 60vh; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -137,42 +144,54 @@
             transform: translateY(-5px);
         }
 
-        /* === 모바일 대응 강화 (768px 이하) === */
-        @media (max-width: 768px) {
+        /* === 모바일 대응 강화 (600px 이하) === */
+        @media (max-width: 600px) {
             
             /* 1. 네비게이션 및 로고 공간 최소화 */
             nav {
-                padding: 0.7rem 15px; /* 상하 패딩 대폭 축소 */
+                padding: 0.3rem 10px !important; 
+                height: 40px !important; 
             }
             nav .logo {
-                font-size: 1.1rem; /* 로고 크기 축소 */
+                font-size: 0.9rem !important; 
+                line-height: 1.0;
+                margin: 0 !important;
+                padding: 0 !important;
             }
 
-            /* 2. 섹션 제목 크기 조정 */
-            h2 {
-                font-size: 1.4rem; /* 섹션 제목 크기 대폭 축소 */
-                margin-bottom: 20px;
-                line-height: 1.2; 
-            }
-            
-            /* 3. HERO 섹션 크기 및 폰트 조정 */
+            /* 2. Hero 섹션 크기 및 폰트 조정 */
             .hero { 
-                height: 50vh; /* 높이를 50vh로 더 축소 */
-                padding: 30px 20px; 
+                height: 40vh !important; 
+                padding: 10px 10px !important; 
             }
             .hero h1 { 
-                font-size: 1.8rem; /* Hero 제목 크기 더 축소 */
-                margin-top: 0;
+                font-size: 1.5rem !important; 
+                margin-top: 0 !important;
+                margin-bottom: 10px !important;
                 line-height: 1.2;
             } 
             .hero p { 
-                font-size: 0.9rem;
+                font-size: 0.8rem !important; 
             } 
-            .tagline { font-size: 0.75rem; }
+            .tagline { 
+                font-size: 0.65rem !important; 
+                margin-top: 10px !important; 
+            }
+            
+            /* 3. 섹션 제목 크기 조정 */
+            h2 {
+                font-size: 1.2rem !important; 
+                margin-bottom: 10px !important;
+            }
+            h2::after {
+                width: 40px !important;
+                height: 3px !important;
+                margin: 5px auto 0 !important;
+            }
             
             /* 기타 모바일 설정 */
             section {
-                padding: 30px 15px; /* 섹션 패딩 축소 */
+                padding: 20px 10px !important; 
             }
             
             .content-grid { 
@@ -180,11 +199,16 @@
                 gap: 20px;
             }
             
+            .text-block p {
+                font-size: 0.9rem !important; 
+            }
+            
             .card, .life-card { 
                 min-width: 100%;
                 padding: 20px;
             }
             
+            /* 성장 스토리 수직 정렬 */
             .growth-story-container {
                 flex-direction: column;
                 gap: 20px;
@@ -195,6 +219,7 @@
                 margin-bottom: 0;
             }
             
+            /* 미디어 컨테이너 */
             .project-media-container {
                 flex-direction: column; 
                 align-items: center; 
@@ -306,6 +331,8 @@ Your browser does not support the video tag.
 <figure class="coding-video-figure">
 <video controls autoplay muted loop class="coding-video">
 <source src="ai_matching_code_video.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 <figcaption style="margin-top: 10px; font-size: 1rem; color: var(--primary);">
 Developing the AI-based resource matching system inspired by the sharing fridge.
 </figcaption>
