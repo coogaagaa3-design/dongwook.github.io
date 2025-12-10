@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +61,7 @@
             font-weight: bold;
             font-size: 1.5rem;
             color: var(--primary);
+            white-space: nowrap; /* 데스크탑에서 로고 한 줄 유지 */
         }
 
         nav ul {
@@ -112,7 +114,7 @@
             color: var(--accent);
             font-weight: bold;
             letter-spacing: 2px;
-            white-space: nowrap; /* 데스크탑에서도 줄바꿈 방지 */
+            white-space: nowrap; /* 데스크탑에서 줄바꿈 방지 */
         }
         
         /* 버튼 스타일 */
@@ -274,8 +276,8 @@
             color: white;
             width: 100%;
             padding: 10px;
-            text-align: center;
             font-size: 1rem;
+            text-align: center;
         }
 
         /* 성장 스토리 레이아웃 수정 CSS */
@@ -341,27 +343,28 @@
         /* === 모바일 대응 강화 (768px 이하) - 핵심 수정 === */
         @media (max-width: 768px) {
             
-            /* 1. 네비게이션 및 로고 공간 최소화 */
+            /* 1. 네비게이션 및 로고 공간 최소화 (요청 1) */
             nav {
                 padding: 0.3rem 10px !important; 
                 height: 40px !important; 
             }
             nav .logo {
-                font-size: 0.9rem !important; 
+                font-size: 0.8rem !important; 
                 line-height: 1.0;
                 margin: 0 !important;
                 padding: 0 !important;
+                white-space: nowrap !important; /* 로고 한 줄 강제 유지 */
             }
 
             /* 2. Hero 섹션 크기 및 폰트 조정 (높이 45vh로 축소) */
             .hero { 
-                height: 45vh !important; /* 45vh로 높이 축소 */
-                padding: 15px 10px !important; /* 상하 패딩 조정 */
-                justify-content: flex-start; /* 콘텐츠를 상단으로 밀어올림 */
+                height: 45vh !important;
+                padding: 15px 10px !important;
+                justify-content: flex-start;
             }
             .hero h1 { 
                 font-size: 1.5rem !important; 
-                margin-top: 50px !important; /* Nav 아래로 내림 */
+                margin-top: 50px !important;
                 margin-bottom: 8px !important;
                 line-height: 1.2;
             } 
@@ -369,23 +372,25 @@
                 font-size: 0.8rem !important; 
                 margin-bottom: 10px !important;
             } 
+            
+            /* 3. 태그라인 크기 대폭 축소 및 한 줄 유지 (요청 3) */
             .tagline { 
-                font-size: 0.8rem !important; /* Tagline 크기 축소 */
+                font-size: 0.7rem !important; 
                 margin-top: 5px !important; 
                 letter-spacing: 1px; 
-                white-space: nowrap !important; /* 한 줄 유지 강제 적용 */
+                white-space: nowrap !important; /* Tagline 한 줄 강제 유지 */
             }
             
-            /* 3. 섹션 제목 및 공통 설정 */
+            /* 4. 섹션 제목(H2) 크기 조정 (요청 2) */
             section {
-                padding: 30px 15px !important; /* 패딩 축소 */
+                padding: 30px 15px !important;
             }
             h2 {
-                font-size: 1.5rem !important; /* 제목 크기 축소 */
+                font-size: 1.3rem !important; /* H2 제목 크기 축소 */
                 margin-bottom: 20px !important;
             }
             
-            /* 4. 그리드 및 카드 1열로 변경 */
+            /* 5. 그리드 및 카드 1열로 변경 */
             .content-grid { 
                 grid-template-columns: 1fr; 
                 gap: 20px;
@@ -395,38 +400,34 @@
                 padding: 20px;
             }
             
-            /* 5. 성장 스토리 이미지와 텍스트 수직 정렬 (이미지 크게 나옴 문제 해결) */
+            /* 6. 성장 스토리 이미지와 텍스트 수직 정렬 */
             .growth-story-container {
                 flex-direction: column;
                 gap: 20px;
             }
             .growth-story-image-wrap {
                 max-width: 100%; 
-                order: -1; /* 이미지를 텍스트 위로 올림 */
+                order: -1; 
                 margin-bottom: 0;
-            }
-            .growth-story-image-wrap img {
-                /* 이미지가 텍스트 컨테이너보다 커지지 않도록 명시 */
-                max-width: 100%; 
             }
             .resilience-card-full {
                 padding: 20px;
             }
 
-            /* 6. 봉사활동/코딩 미디어 수직 정렬 */
+            /* 7. 봉사활동/코딩 미디어 수직 정렬 */
             .project-media-container {
                 flex-direction: column; 
                 align-items: center; 
                 gap: 30px; 
             }
             .slideshow-container, .coding-video-figure {
-                max-width: 100%; /* 너비를 100%로 설정하여 가로 스크롤 방지 */
+                max-width: 100%;
                 min-width: auto;
             }
             
-            /* 7. 텍스트 정렬 */
+            /* 8. 텍스트 정렬 */
             .text-block p {
-                text-align: left !important; /* 모바일에서 가독성을 위해 좌측 정렬 */
+                text-align: left !important; 
                 padding: 0 5px;
             }
             
@@ -471,8 +472,7 @@
 </div>
 <div class="resilience-card-full">
 <h3>Resilience Forged in Challenges</h3>
-<p>The failure at the swimming pool led to the ultimate decision to undergo surgery. The pain and endurance required during recovery taught me that **persistence leads to a stronger version of myself**, both physically and mentally.</p>
-</div>
+<p>The failure at the swimming pool led to the ultimate decision to undergo surgery. The pain and endurance required during recovery taught me that **persistence leads to a stronger version of myself**, both physically and mentally.</p></div>
 </section>
 
 <section id="tech" style="background-color: #fff;">
