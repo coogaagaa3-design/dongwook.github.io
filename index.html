@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,7 +165,7 @@
             text-align: center;
         }
 
-        /* 텍스트 블록 중앙 정렬 */
+        /* 텍스트 블록 중앙 정렬 (데스크탑 기본값) */
         .text-block {
             text-align: center;
         }
@@ -343,7 +341,7 @@
         /* === 모바일 대응 강화 (768px 이하) - 핵심 수정 === */
         @media (max-width: 768px) {
             
-            /* 1. 네비게이션 및 로고 공간 최소화 (요청 1) */
+            /* 1. 네비게이션 및 로고 공간 최소화 */
             nav {
                 padding: 0.3rem 10px !important; 
                 height: 40px !important; 
@@ -356,7 +354,7 @@
                 white-space: nowrap !important; /* 로고 한 줄 강제 유지 */
             }
 
-            /* 2. Hero 섹션 크기 및 폰트 조정 (높이 45vh로 축소) */
+            /* 2. Hero 섹션 크기 및 폰트 조정 */
             .hero { 
                 height: 45vh !important;
                 padding: 15px 10px !important;
@@ -373,15 +371,15 @@
                 margin-bottom: 10px !important;
             } 
             
-            /* 3. 태그라인 크기 대폭 축소 및 한 줄 유지 (요청 3) */
+            /* 3. 태그라인 크기 대폭 축소 및 한 줄 유지 (수정됨: 0.7rem -> 0.6rem) */
             .tagline { 
-                font-size: 0.7rem !important; 
+                font-size: 0.6rem !important; /* 더 작게 줄여서 넘침 방지 */
                 margin-top: 5px !important; 
                 letter-spacing: 1px; 
                 white-space: nowrap !important; /* Tagline 한 줄 강제 유지 */
             }
             
-            /* 4. 섹션 제목(H2) 크기 조정 (요청 2) */
+            /* 4. 섹션 제목(H2) 크기 조정 */
             section {
                 padding: 30px 15px !important;
             }
@@ -425,10 +423,14 @@
                 min-width: auto;
             }
             
-            /* 8. 텍스트 정렬 */
+            /* 8. 텍스트 정렬 (수정됨: left -> center) */
             .text-block p {
-                text-align: left !important; 
+                text-align: center !important; /* 모바일에서 중앙 정렬로 변경 */
                 padding: 0 5px;
+            }
+            /* Vision 섹션의 텍스트는 중앙 정렬 유지 */
+            .vision p {
+                text-align: center !important;
             }
             
             nav ul { display: none; }
@@ -524,22 +526,14 @@ Your browser does not support the video tag.
 <div class="image-caption">Preparing meals for those in need.</div>
 </div>
 <div class="mySlides volunteer fade">
-<img src="volunteer_4.jpg" alt="Dongwook and community members working together.">
-<div class="image-caption">Community outreach and teamwork.</div>
-</div>
-<div class="mySlides volunteer fade">
-<img src="volunteer_5.jpg" alt="Various Volunteer Certificates">
-<div class="image-caption">Various Volunteer Certificates</div>
-</div>
-</div>
+<img src="volunteer_4.jpg" alt="Dongwook and community members working together."><div class="image-caption">Community outreach and teamwork.</div></div><div class="mySlides volunteer fade">
+<img src="volunteer_5.jpg" alt="Various Volunteer Certificates"><div class="image-caption">Various Volunteer Certificates</div></div></div>
 <figure class="coding-video-figure">
 <video controls autoplay muted loop class="coding-video">
 <source src="ai_matching_code_video.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+Your browser does not support the video tag.</video>
 <figcaption style="margin-top: 10px; font-size: 1rem; color: var(--primary);">
-Developing the AI-based resource matching system inspired by the sharing fridge.
-</figcaption>
+Developing the AI-based resource matching system inspired by the sharing fridge.</figcaption>
 <a href="[Coding_Portfolio_Link_Here]" class="portfolio-btn" target="_blank" style="margin-top: 15px;">Coding Project Details (View)</a>
 </figure>
 </div>
