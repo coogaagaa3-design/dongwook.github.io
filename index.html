@@ -1,14 +1,8 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dongwook Ham | Story of Growth, Code, and Art</title>
-
-    <meta property="og:title" content="Dongwook Ham | Art and Connection">
-    <meta property="og:description" content="자유로운 표현과 성장을 담은 포트폴리오입니다.">
-    <meta property="og:image" content="https://www.dongwookham.com/art_3.jpg"> 
-    <meta property="og:url" content="https://www.dongwookham.com/">
     <style>
         /* 기본 설정 */
         :root {
@@ -31,10 +25,11 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-light);
+            /* 모바일에서 가로 스크롤 및 겹침 방지 */
             overflow-x: hidden; 
         }
 
-        /* 네비게이션 (데스크탑) */
+        /* 네비게이션 */
         nav {
             background: var(--white);
             padding: 1rem 2rem;
@@ -49,15 +44,35 @@
 
         nav .logo {
             font-weight: bold;
-            font-size: 1.5rem; /* 데스크탑 크기 유지 */
+            font-size: 1.5rem;
             color: var(--primary);
         }
 
-        /* 히어로 섹션 (데스크탑) */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        /* 히어로 섹션 (수정: 높이 80vh -> 60vh로 축소) */
         .hero {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
-            height: 60vh; 
+            height: 60vh; /* 요청에 따라 높이 축소 */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -67,7 +82,7 @@
         }
 
         .hero h1 {
-            font-size: 3.5rem; /* 데스크탑 크기 유지 */
+            font-size: 3.5rem;
             margin-bottom: 20px;
         }
 
@@ -83,10 +98,26 @@
             color: var(--accent);
             font-weight: bold;
             letter-spacing: 2px;
-            white-space: nowrap; /* 데스크탑에서도 줄바꿈 방지 */
         }
         
-        /* 공통 섹션 스타일 (데스크탑) */
+        /* 버튼 스타일 (추가됨) */
+        .portfolio-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .portfolio-btn:hover {
+            background-color: #d66a1a;
+        }
+
+        /* 공통 섹션 스타일 */
         section {
             padding: 80px 20px;
             max-width: 1000px;
@@ -94,7 +125,7 @@
         }
 
         h2 {
-            font-size: 2.5rem; /* 데스크탑 크기 유지 */
+            font-size: 2.5rem;
             color: var(--primary);
             margin-bottom: 40px;
             text-align: center;
@@ -110,15 +141,16 @@
             margin: 10px auto 0;
         }
 
-        /* 텍스트, 카드, 그리드 등 (데스크탑 스타일 유지) */
+        /* Grid Layout for content */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             align-items: flex-start;
-            text-align: center; 
+            text-align: center; /* 그리드 내의 전체 텍스트 중앙 정렬 */
         }
 
+        /* 텍스트 블록 중앙 정렬 */
         .text-block {
             text-align: center;
         }
@@ -126,10 +158,45 @@
         .text-block p {
             margin-bottom: 20px;
             font-size: 1.1rem;
-            text-align: center; 
+            text-align: center; /* 문단 텍스트 중앙 정렬 */
         }
 
-        .card, .life-card {
+        .text-block strong {
+            color: var(--primary);
+        }
+        
+        /* === LIFE 섹션 카드 스타일 (추가됨) === */
+        .life-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            flex: 1;
+            transition: transform 0.3s;
+        }
+
+        .life-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .life-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        /* ==================================== */
+
+
+        /* 카드 스타일 (Tech 섹션) */
+        .card-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .card {
             background: var(--white);
             padding: 30px;
             border-radius: 10px;
@@ -138,81 +205,228 @@
             min-width: 280px;
             transition: transform 0.3s;
         }
-        
-        .life-card:hover, .card:hover {
+
+        .card:hover {
             transform: translateY(-5px);
         }
 
-        /* === 모바일 대응 강화 (600px 이하) - HERO 크기 최대화 및 Tagline 한 줄 고정 === */
-        @media (max-width: 600px) {
-            
-            /* 1. 네비게이션 및 로고 공간 최소화 */
-            nav {
-                padding: 0.3rem 10px !important; 
-                height: 40px !important; 
-            }
-            nav .logo {
-                font-size: 0.9rem !important; 
-                line-height: 1.0;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        /* 비디오 스타일 */
+        .game-video {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        /* 코딩 비디오 및 슬라이드쇼 컨테이너 */
+        .project-media-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center; 
+            align-items: flex-start; 
+            margin-top: 50px; 
+            /* 모바일 겹침 방지 위해 랩핑 허용 */
+            flex-wrap: wrap; 
+        }
+        /* 코딩 비디오 스타일 */
+        .coding-video-figure {
+            margin: 0;
+            text-align: center;
+            flex-grow: 1; 
+            min-width: 300px;
+            max-width: 50%; /* 데스크탑에서 비율 유지 */
+        }
+        .coding-video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
 
-            /* 2. Hero 섹션 크기 및 폰트 조정 (높이 55vh로 최대 증가, 패딩 추가) */
+
+        /* 슬라이드쇼 CSS */
+        .slideshow-container {
+            max-width: 350px; 
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+            flex-shrink: 0; 
+        }
+
+        /* 미술 슬라이드쇼 중앙 정렬을 위한 재조정 */
+        #artSlideshow {
+            margin: 50px auto; /* 중앙 정렬 */
+        }
+
+        .mySlides {
+            display: none;
+            width: 100%;
+        }
+
+        .mySlides img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        /* Tech Stack Tags */
+        .tags {
+            margin-top: 15px;
+        }
+        .tag {
+            display: inline-block;
+            background: #ecf0f1;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* 하단 비전 섹션 */
+        .vision {
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--primary);
+            margin: 30px 0;
+        }
+
+        /* 푸터 */
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        /* 이미지/사진 추가 스타일 */
+        .story-image {
+            margin: 20px 0 40px;
+            text-align: center;
+        }
+        .story-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        .story-image figcaption {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #777;
+        }
+        /* 성장 스토리 레이아웃 수정 CSS */
+        #about .content-grid {
+            display: none;
+        }
+        .growth-story-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            text-align: center; /* 성장 스토리 컨테이너 내부 중앙 정렬 */
+        }
+        .growth-story-text {
+            flex: 3;
+            text-align: center; /* 텍스트 블록 중앙 정렬 */
+        }
+        .growth-story-text p {
+             text-align: center; /* 텍스트 중앙 정렬 */
+        }
+
+        .growth-story-image-wrap {
+            flex: 1;
+            max-width: 250px;
+            text-align: center;
+        }
+
+        .growth-story-image-wrap img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .resilience-card-full {
+            background-color: #fdf2e9;
+            border-left: 5px solid var(--accent);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center; /* 카드 내용 중앙 정렬 */
+        }
+        .resilience-card-full h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* === 모바일 대응 강화 (768px 이하) === */
+        @media (max-width: 768px) {
+            
+            /* 기본 레이아웃 재설정 */
+            body {
+                padding: 0;
+            }
+            section {
+                padding: 40px 15px; /* 모바일에서 좌우 패딩 줄여 콘텐츠 공간 확보 */
+            }
+            
+            /* HERO 섹션 폰트 크기 및 공간 확보 - 겹침 문제 해결 */
             .hero { 
-                height: 55vh !important; /* 요청하신 대로 높이 55vh로 최대 증가 */
-                padding: 20px 10px !important; /* 상하 패딩 늘림 */
+                height: 70vh; /* 높이를 조금 늘려 공간 확보 */
+                padding-top: 60px; /* 상단 패딩 추가하여 nav 아래에 content가 보이도록 */
             }
             .hero h1 { 
-                font-size: 1.5rem !important; 
-                margin-top: 10px !important; 
-                margin-bottom: 10px !important;
-                line-height: 1.2;
+                font-size: 2rem; /* h1 폰트 크기 대폭 축소 */
+                margin-top: 0;
             } 
             .hero p { 
-                font-size: 0.8rem !important; 
-                margin-bottom: 15px !important; /* 설명과 태그라인 사이 간격 늘림 */
+                font-size: 1.1rem;
+                text-align: center; /* 모바일 Hero p 중앙 정렬 */
             } 
-            .tagline { 
-                font-size: 0.7rem !important; /* 폰트 크기 축소 */
-                margin-top: 10px !important; 
-                letter-spacing: 1px; /* 글자 간격 살짝 줄임 */
-                white-space: nowrap !important; /* 줄 바꿈 방지 강제 적용 */
-            }
+            .tagline { font-size: 0.9rem; }
             
-            /* 3. 섹션 제목 크기 조정 */
-            h2 {
-                font-size: 1.2rem !important; 
-                margin-bottom: 10px !important;
-            }
-            h2::after {
-                width: 40px !important;
-                height: 3px !important;
-                margin: 5px auto 0 !important;
-            }
-            
-            /* 기타 모바일 설정 */
-            section {
-                padding: 20px 10px !important; 
-            }
-            
+            /* 2열 그리드를 1열로 강제 변경 */
             .content-grid { 
                 grid-template-columns: 1fr; 
-                gap: 20px;
+                gap: 30px;
+                text-align: center;
             }
-            
             .text-block p {
-                font-size: 0.9rem !important; 
+                text-align: center; /* 모바일 문단 텍스트 중앙 정렬 */
             }
-            
-            .card, .life-card { 
+            .card, .life-card { /* life-card도 모바일에서 min-width 100% 적용 */
                 min-width: 100%;
-                padding: 20px;
+                text-align: center;
             }
             
+            /* 성장 스토리 수직 정렬 */
             .growth-story-container {
                 flex-direction: column;
                 gap: 20px;
+                text-align: center;
             }
             .growth-story-image-wrap {
                 max-width: 100%; 
@@ -220,12 +434,21 @@
                 margin-bottom: 0;
             }
             
+            /* 봉사활동 섹션: 비디오와 슬라이드쇼 수직 정렬 및 폭 전체 사용 */
             .project-media-container {
                 flex-direction: column; 
                 align-items: center; 
-                gap: 30px; 
+                gap: 40px; /* 항목 간 간격 벌리기 */
+            }
+            .slideshow-container {
+                max-width: 100%; /* 모바일에서 폭 전체 사용 */
+            }
+            .coding-video-figure {
+                max-width: 100%; /* 모바일에서 폭 전체 사용 */
+                min-width: auto;
             }
             
+            /* 숨겨진 네비게이션 메뉴 (현재 디자인 유지) */
             nav ul { display: none; }
         }
     </style>
@@ -351,7 +574,7 @@ Developing the AI-based resource matching system inspired by the sharing fridge.
 </div>
 <div class="text-block life-card">
 <h3>Artistic Freedom</h3>
-<p>My mother is an **artist**, and from a young age, my brother and I were surrounded by creative experiences. When we were little, we wore firefighter costumes and played games where we used water guns to **"put out fires" we had drawn on the bathroom walls"**.</p>
+<p>My mother is an **artist**, and from a young age, my brother and I were surrounded by creative experiences. When we were little, we wore firefighter costumes and played games where we used water guns to **"put out fires" we had drawn on the bathroom walls**.</p>
 <p>As we got older, my mother ordered large canvases that filled our living room, and over several months, we each completed a personal artwork. I became fascinated by drawing faces. She taught me that different artists can express the same face in entirely different ways. Through her guidance, I learned to appreciate **freedom in expression and the beauty of individual style**.</p>
 </div>
 </div>
