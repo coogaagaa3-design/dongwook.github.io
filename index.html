@@ -1,8 +1,15 @@
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dongwook Ham | Story of Growth, Code, and Art</title>
+
+    <meta property="og:title" content="Dongwook Ham | Art and Connection">
+    <meta property="og:description" content="자유로운 표현과 성장을 담은 포트폴리오입니다.">
+    <meta property="og:image" content="https://www.dongwookham.com/art_3.jpg"> 
+    <meta property="og:url" content="https://www.dongwookham.com/">
     <style>
         /* 기본 설정 */
         :root {
@@ -29,7 +36,14 @@
             overflow-x: hidden; 
         }
 
-        /* 네비게이션 */
+        /* 공통 이미지/비디오 설정: 부모 컨테이너를 넘어가지 않게 방지 */
+        img, video {
+            max-width: 100%;
+            height: auto;
+            display: block; /* 인라인 요소의 불필요한 공백 제거 */
+        }
+
+        /* 네비게이션 (데스크탑) */
         nav {
             background: var(--white);
             padding: 1rem 2rem;
@@ -68,11 +82,11 @@
             color: var(--accent);
         }
 
-        /* 히어로 섹션 (수정: 높이 80vh -> 60vh로 축소) */
+        /* 히어로 섹션 (데스크탑) */
         .hero {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
-            height: 60vh; /* 요청에 따라 높이 축소 */
+            height: 60vh; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -98,9 +112,10 @@
             color: var(--accent);
             font-weight: bold;
             letter-spacing: 2px;
+            white-space: nowrap; /* 데스크탑에서도 줄바꿈 방지 */
         }
         
-        /* 버튼 스타일 (추가됨) */
+        /* 버튼 스타일 */
         .portfolio-btn {
             display: inline-block;
             background-color: var(--accent);
@@ -147,7 +162,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             align-items: flex-start;
-            text-align: center; /* 그리드 내의 전체 텍스트 중앙 정렬 */
+            text-align: center;
         }
 
         /* 텍스트 블록 중앙 정렬 */
@@ -158,14 +173,10 @@
         .text-block p {
             margin-bottom: 20px;
             font-size: 1.1rem;
-            text-align: center; /* 문단 텍스트 중앙 정렬 */
+            text-align: center;
         }
 
-        .text-block strong {
-            color: var(--primary);
-        }
-        
-        /* === LIFE 섹션 카드 스타일 (추가됨) === */
+        /* === LIFE 섹션 카드 스타일 === */
         .life-card {
             background: var(--white);
             padding: 30px;
@@ -183,9 +194,7 @@
             color: var(--primary);
             margin-bottom: 15px;
         }
-        /* ==================================== */
-
-
+        
         /* 카드 스타일 (Tech 섹션) */
         .card-container {
             display: flex;
@@ -206,14 +215,6 @@
             transition: transform 0.3s;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
         /* 비디오 스타일 */
         .game-video {
             width: 100%;
@@ -223,6 +224,7 @@
             margin-top: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
+        
         /* 코딩 비디오 및 슬라이드쇼 컨테이너 */
         .project-media-container {
             display: flex;
@@ -230,23 +232,23 @@
             justify-content: center; 
             align-items: flex-start; 
             margin-top: 50px; 
-            /* 모바일 겹침 방지 위해 랩핑 허용 */
             flex-wrap: wrap; 
         }
+        
         /* 코딩 비디오 스타일 */
         .coding-video-figure {
             margin: 0;
             text-align: center;
             flex-grow: 1; 
             min-width: 300px;
-            max-width: 50%; /* 데스크탑에서 비율 유지 */
+            max-width: 50%;
         }
+        
         .coding-video {
             width: 100%;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
-
 
         /* 슬라이드쇼 CSS */
         .slideshow-container {
@@ -261,19 +263,10 @@
 
         /* 미술 슬라이드쇼 중앙 정렬을 위한 재조정 */
         #artSlideshow {
-            margin: 50px auto; /* 중앙 정렬 */
+            margin: 50px auto; 
         }
 
-        .mySlides {
-            display: none;
-            width: 100%;
-        }
-
-        .mySlides img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+        /* 이미지 캡션 */
         .image-caption {
             position: absolute;
             bottom: 0;
@@ -285,22 +278,45 @@
             font-size: 1rem;
         }
 
-        /* Tech Stack Tags */
-        .tags {
-            margin-top: 15px;
+        /* 성장 스토리 레이아웃 수정 CSS */
+        .growth-story-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            text-align: center; 
         }
-        .tag {
-            display: inline-block;
-            background: #ecf0f1;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            color: var(--primary);
-            font-weight: bold;
+        .growth-story-text {
+            flex: 3;
+            text-align: center; 
+        }
+        .growth-story-text p {
+             text-align: center; 
         }
 
+        .growth-story-image-wrap {
+            flex: 1;
+            max-width: 250px;
+            text-align: center;
+        }
+
+        .growth-story-image-wrap img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        /* Resilience Card */
+        .resilience-card-full {
+            background-color: #fdf2e9;
+            border-left: 5px solid var(--accent);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center; 
+        }
+        
         /* 하단 비전 섹션 */
         .vision {
             background-color: var(--white);
@@ -322,133 +338,98 @@
             padding: 40px 20px;
         }
 
-        /* 이미지/사진 추가 스타일 */
-        .story-image {
-            margin: 20px 0 40px;
-            text-align: center;
-        }
-        .story-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        }
-        .story-image figcaption {
-            margin-top: 10px;
-            font-size: 0.95rem;
-            color: #777;
-        }
-        /* 성장 스토리 레이아웃 수정 CSS */
-        #about .content-grid {
-            display: none;
-        }
-        .growth-story-container {
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-            margin-bottom: 40px;
-            text-align: center; /* 성장 스토리 컨테이너 내부 중앙 정렬 */
-        }
-        .growth-story-text {
-            flex: 3;
-            text-align: center; /* 텍스트 블록 중앙 정렬 */
-        }
-        .growth-story-text p {
-             text-align: center; /* 텍스트 중앙 정렬 */
-        }
-
-        .growth-story-image-wrap {
-            flex: 1;
-            max-width: 250px;
-            text-align: center;
-        }
-
-        .growth-story-image-wrap img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .resilience-card-full {
-            background-color: #fdf2e9;
-            border-left: 5px solid var(--accent);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center; /* 카드 내용 중앙 정렬 */
-        }
-        .resilience-card-full h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        /* === 모바일 대응 강화 (768px 이하) === */
+        /* === 모바일 대응 강화 (768px 이하) - 핵심 수정 === */
         @media (max-width: 768px) {
             
-            /* 기본 레이아웃 재설정 */
-            body {
-                padding: 0;
+            /* 1. 네비게이션 및 로고 공간 최소화 */
+            nav {
+                padding: 0.3rem 10px !important; 
+                height: 40px !important; 
             }
-            section {
-                padding: 40px 15px; /* 모바일에서 좌우 패딩 줄여 콘텐츠 공간 확보 */
+            nav .logo {
+                font-size: 0.9rem !important; 
+                line-height: 1.0;
+                margin: 0 !important;
+                padding: 0 !important;
             }
-            
-            /* HERO 섹션 폰트 크기 및 공간 확보 - 겹침 문제 해결 */
+
+            /* 2. Hero 섹션 크기 및 폰트 조정 (높이 45vh로 축소) */
             .hero { 
-                height: 70vh; /* 높이를 조금 늘려 공간 확보 */
-                padding-top: 60px; /* 상단 패딩 추가하여 nav 아래에 content가 보이도록 */
+                height: 45vh !important; /* 45vh로 높이 축소 */
+                padding: 15px 10px !important; /* 상하 패딩 조정 */
+                justify-content: flex-start; /* 콘텐츠를 상단으로 밀어올림 */
             }
             .hero h1 { 
-                font-size: 2rem; /* h1 폰트 크기 대폭 축소 */
-                margin-top: 0;
+                font-size: 1.5rem !important; 
+                margin-top: 50px !important; /* Nav 아래로 내림 */
+                margin-bottom: 8px !important;
+                line-height: 1.2;
             } 
             .hero p { 
-                font-size: 1.1rem;
-                text-align: center; /* 모바일 Hero p 중앙 정렬 */
+                font-size: 0.8rem !important; 
+                margin-bottom: 10px !important;
             } 
-            .tagline { font-size: 0.9rem; }
+            .tagline { 
+                font-size: 0.8rem !important; /* Tagline 크기 축소 */
+                margin-top: 5px !important; 
+                letter-spacing: 1px; 
+                white-space: nowrap !important; /* 한 줄 유지 강제 적용 */
+            }
             
-            /* 2열 그리드를 1열로 강제 변경 */
+            /* 3. 섹션 제목 및 공통 설정 */
+            section {
+                padding: 30px 15px !important; /* 패딩 축소 */
+            }
+            h2 {
+                font-size: 1.5rem !important; /* 제목 크기 축소 */
+                margin-bottom: 20px !important;
+            }
+            
+            /* 4. 그리드 및 카드 1열로 변경 */
             .content-grid { 
                 grid-template-columns: 1fr; 
-                gap: 30px;
-                text-align: center;
+                gap: 20px;
             }
-            .text-block p {
-                text-align: center; /* 모바일 문단 텍스트 중앙 정렬 */
-            }
-            .card, .life-card { /* life-card도 모바일에서 min-width 100% 적용 */
+            .card, .life-card { 
                 min-width: 100%;
-                text-align: center;
+                padding: 20px;
             }
             
-            /* 성장 스토리 수직 정렬 */
+            /* 5. 성장 스토리 이미지와 텍스트 수직 정렬 (이미지 크게 나옴 문제 해결) */
             .growth-story-container {
                 flex-direction: column;
                 gap: 20px;
-                text-align: center;
             }
             .growth-story-image-wrap {
                 max-width: 100%; 
-                order: -1; 
+                order: -1; /* 이미지를 텍스트 위로 올림 */
                 margin-bottom: 0;
             }
-            
-            /* 봉사활동 섹션: 비디오와 슬라이드쇼 수직 정렬 및 폭 전체 사용 */
+            .growth-story-image-wrap img {
+                /* 이미지가 텍스트 컨테이너보다 커지지 않도록 명시 */
+                max-width: 100%; 
+            }
+            .resilience-card-full {
+                padding: 20px;
+            }
+
+            /* 6. 봉사활동/코딩 미디어 수직 정렬 */
             .project-media-container {
                 flex-direction: column; 
                 align-items: center; 
-                gap: 40px; /* 항목 간 간격 벌리기 */
+                gap: 30px; 
             }
-            .slideshow-container {
-                max-width: 100%; /* 모바일에서 폭 전체 사용 */
-            }
-            .coding-video-figure {
-                max-width: 100%; /* 모바일에서 폭 전체 사용 */
+            .slideshow-container, .coding-video-figure {
+                max-width: 100%; /* 너비를 100%로 설정하여 가로 스크롤 방지 */
                 min-width: auto;
             }
             
-            /* 숨겨진 네비게이션 메뉴 (현재 디자인 유지) */
+            /* 7. 텍스트 정렬 */
+            .text-block p {
+                text-align: left !important; /* 모바일에서 가독성을 위해 좌측 정렬 */
+                padding: 0 5px;
+            }
+            
             nav ul { display: none; }
         }
     </style>
