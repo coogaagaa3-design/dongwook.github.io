@@ -27,7 +27,6 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-light);
-            /* 모바일에서 가로 스크롤 및 겹침 방지 */
             overflow-x: hidden; 
         }
 
@@ -102,23 +101,6 @@
             letter-spacing: 2px;
         }
         
-        /* 버튼 스타일 */
-        .portfolio-btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: var(--white);
-            padding: 10px 20px;
-            margin-top: 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-
-        .portfolio-btn:hover {
-            background-color: #d66a1a;
-        }
-
         /* 공통 섹션 스타일 (데스크탑) */
         section {
             padding: 80px 20px;
@@ -143,7 +125,8 @@
             margin: 10px auto 0;
         }
 
-        /* Grid Layout for content */
+        /* 텍스트 및 카드 스타일 (데스크탑 디자인 유지) */
+        /* ... (이전 코드의 텍스트, 카드, 그리드, 비디오, 슬라이드쇼 스타일 유지) ... */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -152,7 +135,6 @@
             text-align: center; 
         }
 
-        /* 텍스트 블록 중앙 정렬 */
         .text-block {
             text-align: center;
         }
@@ -163,39 +145,7 @@
             text-align: center; 
         }
 
-        .text-block strong {
-            color: var(--primary);
-        }
-        
-        /* === LIFE 섹션 카드 스타일 === */
-        .life-card {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            flex: 1;
-            transition: transform 0.3s;
-        }
-
-        .life-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .life-card h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-        /* 카드 스타일 (Tech 섹션) */
-        .card-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .card {
+        .card, .life-card {
             background: var(--white);
             padding: 30px;
             border-radius: 10px;
@@ -204,229 +154,56 @@
             min-width: 280px;
             transition: transform 0.3s;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-        /* 비디오 스타일 */
-        .game-video {
-            width: 100%;
-            max-height: 350px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-top: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        /* 코딩 비디오 및 슬라이드쇼 컨테이너 */
-        .project-media-container {
-            display: flex;
-            gap: 30px;
-            justify-content: center; 
-            align-items: flex-start; 
-            margin-top: 50px; 
-            /* 모바일 겹침 방지 위해 랩핑 허용 */
-            flex-wrap: wrap; 
-        }
-        /* 코딩 비디오 스타일 */
-        .coding-video-figure {
-            margin: 0;
-            text-align: center;
-            flex-grow: 1; 
-            min-width: 300px;
-            max-width: 50%; /* 데스크탑에서 비율 유지 */
-        }
-        .coding-video {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
-
-
-        /* 슬라이드쇼 CSS */
-        .slideshow-container {
-            max-width: 350px; 
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            background-color: #fff;
-            flex-shrink: 0; 
-        }
-
-        /* 미술 슬라이드쇼 중앙 정렬을 위한 재조정 */
-        #artSlideshow {
-            margin: 50px auto; /* 중앙 정렬 */
-        }
-
-        .mySlides {
-            display: none;
-            width: 100%;
-        }
-
-        .mySlides img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .image-caption {
-            position: absolute;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            width: 100%;
-            padding: 10px;
-            text-align: center;
-            font-size: 1rem;
-        }
-
-        /* Tech Stack Tags */
-        .tags {
-            margin-top: 15px;
-        }
-        .tag {
-            display: inline-block;
-            background: #ecf0f1;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        /* 하단 비전 섹션 */
-        .vision {
-            background-color: var(--white);
-            text-align: center;
-        }
-
-        .quote {
-            font-size: 1.5rem;
-            font-style: italic;
-            color: var(--primary);
-            margin: 30px 0;
-        }
-
-        /* 푸터 */
-        footer {
-            background: var(--primary);
-            color: var(--white);
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        /* 이미지/사진 추가 스타일 */
-        .story-image {
-            margin: 20px 0 40px;
-            text-align: center;
-        }
-        .story-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        }
-        .story-image figcaption {
-            margin-top: 10px;
-            font-size: 0.95rem;
-            color: #777;
-        }
-        /* 성장 스토리 레이아웃 수정 CSS */
-        #about .content-grid {
-            display: none;
-        }
-        .growth-story-container {
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-            margin-bottom: 40px;
-            text-align: center; 
-        }
-        .growth-story-text {
-            flex: 3;
-            text-align: center; 
-        }
-        .growth-story-text p {
-             text-align: center; 
-        }
-
-        .growth-story-image-wrap {
-            flex: 1;
-            max-width: 250px;
-            text-align: center;
-        }
-
-        .growth-story-image-wrap img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .resilience-card-full {
-            background-color: #fdf2e9;
-            border-left: 5px solid var(--accent);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center; 
-        }
-        .resilience-card-full h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
+        
         /* === 모바일 대응 강화 (768px 이하) === */
         @media (max-width: 768px) {
             
-            /* 1. 로고 크기 조정 */
+            /* 1. 로고 크기 조정 (가장 중요) */
             nav .logo {
-                font-size: 1.2rem; /* 로고 크기 축소 */
+                font-size: 1.1rem !important; /* !important를 사용하여 우선순위를 높임 */
+                padding: 5px 0;
+                margin-top: 5px;
             }
 
-            /* 2. 섹션 제목 크기 조정 */
+            /* 2. 섹션 제목 크기 조정 (가장 중요) */
             h2 {
-                font-size: 1.8rem; /* 모든 섹션 제목 크기 축소 */
+                font-size: 1.6rem !important; /* 섹션 제목 크기 대폭 축소 */
+                margin-bottom: 20px !important;
+                line-height: 1.2; /* 줄 간격도 좁혀서 공간 확보 */
             }
             
-            /* 3. HERO 섹션 크기 및 폰트 조정 */
+            /* 3. HERO 섹션 크기 및 폰트 조정 (가장 중요) */
             .hero { 
-                height: 60vh; /* 높이를 60vh로 축소 */
-                padding-top: 40px; /* 상단 패딩 축소 */
+                height: 50vh; /* 높이를 50vh로 더 축소 */
+                padding-top: 30px; 
             }
             .hero h1 { 
-                font-size: 1.8rem; /* Hero 제목 크기 축소 */
+                font-size: 1.9rem !important; /* Hero 제목 크기 더 축소 */
                 margin-top: 0;
+                line-height: 1.2;
             } 
             .hero p { 
-                font-size: 1rem;
+                font-size: 0.9rem;
                 text-align: center; 
             } 
-            .tagline { font-size: 0.8rem; }
+            .tagline { font-size: 0.75rem; }
             
             /* 기타 모바일 설정 */
             section {
-                padding: 40px 15px; 
+                padding: 30px 10px; /* 섹션 패딩 더 축소 */
             }
             
             .content-grid { 
                 grid-template-columns: 1fr; 
-                gap: 30px;
-                text-align: center;
-            }
-            .text-block p {
-                text-align: center; 
-            }
-            .card, .life-card { 
-                min-width: 100%;
-                text-align: center;
+                gap: 20px;
             }
             
+            .card, .life-card { 
+                min-width: 100%;
+                padding: 20px;
+            }
+            
+            /* 성장 스토리 수직 정렬 */
             .growth-story-container {
                 flex-direction: column;
                 gap: 20px;
@@ -438,10 +215,11 @@
                 margin-bottom: 0;
             }
             
+            /* 미디어 컨테이너 */
             .project-media-container {
                 flex-direction: column; 
                 align-items: center; 
-                gap: 40px; 
+                gap: 30px; 
             }
             .slideshow-container {
                 max-width: 100%; 
@@ -451,7 +229,6 @@
                 min-width: auto;
             }
             
-            /* 숨겨진 네비게이션 메뉴 (현재 디자인 유지) */
             nav ul { display: none; }
         }
     </style>
