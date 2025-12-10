@@ -30,6 +30,8 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-light);
+            /* 모바일에서 오버플로우 방지 */
+            overflow-x: hidden; 
         }
 
         /* 네비게이션 */
@@ -71,11 +73,11 @@
             color: var(--accent);
         }
 
-        /* 히어로 섹션 (수정: 높이 80vh -> 60vh로 축소) */
+        /* 히어로 섹션 (높이 60vh 유지) */
         .hero {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
-            height: 60vh; /* 높이 축소 */
+            height: 60vh; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -127,17 +129,23 @@
             margin: 10px auto 0;
         }
 
-        /* Grid Layout for content */
+        /* Grid Layout for content (모바일에서 문제가 될 수 있어, 미디어 쿼리에서 1열로 강제 변경) */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             align-items: flex-start;
         }
+        
+        /* 텍스트 블록에 유연성 추가 */
+        .text-block {
+            width: 100%;
+        }
 
         .text-block p {
             margin-bottom: 20px;
             font-size: 1.1rem;
+            /* 텍스트가 겹치는 문제를 완화하기 위해 최소 너비 제거 */
         }
 
         .text-block strong {
@@ -186,17 +194,20 @@
         .project-media-container {
             display: flex;
             gap: 30px;
-            justify-content: center; /* 가운데 정렬 */
-            align-items: flex-start; /* 상단 정렬 */
-            margin-top: 50px; /* 섹션 상단에서 간격 확보 */
+            justify-content: center; 
+            align-items: flex-start; 
+            margin-top: 50px; 
+            /* 모바일에서 겹침을 방지하기 위해 래핑 허용 */
+            flex-wrap: wrap; 
         }
         
         /* 코딩 비디오 스타일 */
         .coding-video-figure {
             margin: 0;
             text-align: center;
-            flex-grow: 1; /* 남은 공간을 코딩 비디오가 채우도록 함 */
+            flex-grow: 1; 
             min-width: 300px; 
+            max-width: 50%; /* 데스크탑에서 비율 유지 */
         }
         .coding-video {
             width: 100%;
@@ -207,7 +218,7 @@
 
         /* 슬라이드쇼 CSS */
         .slideshow-container {
-            max-width: 350px; /* 봉사활동 슬라이드쇼 크기 유지 */
+            max-width: 350px; 
             position: relative;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             border-radius: 10px;
@@ -216,9 +227,9 @@
             flex-shrink: 0; 
         }
 
-        /* 미술 슬라이드쇼 중앙 정렬을 위한 재조정 */
+        /* 미술 슬라이드쇼 중앙 정렬 */
         #artSlideshow {
-            margin: 50px auto; /* 중앙 정렬 */
+            margin: 50px auto; 
         }
 
         .mySlides {
@@ -338,29 +349,56 @@
             margin-bottom: 15px;
         }
 
-        /* 모바일 대응 */
+        /* === 모바일 대응 강화 (768px 이하) === */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .content-grid { grid-template-columns: 1fr; }
-            nav ul { display: none; }
             
+            /* 기본 레이아웃 재설정 */
+            body {
+                padding: 0;
+            }
+            section {
+                padding: 40px 15px; /* 모바일에서 좌우 패딩 줄여 콘텐츠 공간 확보 */
+            }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.2rem; }
+            .tagline { font-size: 1rem; }
+            
+            /* 2열 그리드를 1열로 강제 변경 */
+            .content-grid { 
+                grid-template-columns: 1fr; 
+                gap: 30px;
+            }
+            .card {
+                min-width: 100%;
+            }
+            
+            /* 성장 스토리 수직 정렬 */
             .growth-story-container {
                 flex-direction: column;
+                gap: 20px;
             }
             .growth-story-image-wrap {
                 max-width: 100%; 
                 order: -1; 
-                margin-bottom: 20px;
+                margin-bottom: 0;
             }
-            /* 봉사활동 섹션 모바일 대응 */
+            
+            /* 봉사활동 섹션: 비디오와 슬라이드쇼 수직 정렬 및 폭 전체 사용 */
             .project-media-container {
-                flex-direction: column; /* 모바일에서 다시 세로로 쌓기 */
-                align-items: center; /* 가운데 정렬 */
+                flex-direction: column; 
+                align-items: center; 
+                gap: 40px; /* 항목 간 간격 벌리기 */
             }
-            .slideshow-container, .coding-video-figure {
-                max-width: 100%; /* 모바일 전체 폭 사용 */
+            .slideshow-container {
+                max-width: 100%; /* 모바일에서 폭 전체 사용 */
+            }
+            .coding-video-figure {
+                max-width: 100%; /* 모바일에서 폭 전체 사용 */
                 min-width: auto;
             }
+            
+            /* 숨겨진 네비게이션 메뉴 (현재 디자인 유지) */
+            nav ul { display: none; }
         }
     </style>
 </head>
@@ -463,8 +501,8 @@
                     <div class="image-caption">Community outreach and teamwork.</div>
                 </div>
                 <div class="mySlides volunteer fade">
-                    <img src="volunteer_5.jpg" alt="Various Volunteer Certificates">
-                    <div class="image-caption">Various Volunteer Certificates</div>
+                    <img src="volunteer_5.jpg" alt="다양한 봉사활동 확인증">
+                    <div class="image-caption">다양한 봉사활동 확인증</div>
                 </div>
             </div>
             
@@ -576,6 +614,4 @@
         
     </script>
 </body>
-
 </html>
-
