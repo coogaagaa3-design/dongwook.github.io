@@ -371,11 +371,11 @@
                 margin-bottom: 10px !important;
             } 
             
-            /* 3. 태그라인 크기 대폭 축소 및 한 줄 유지 (수정됨: 0.7rem -> 0.6rem) */
+            /* 3. 태그라인 크기 대폭 축소 및 한 줄 유지 (최종 수정: 0.55rem, letter-spacing 0.5px) */
             .tagline { 
-                font-size: 0.6rem !important; /* 더 작게 줄여서 넘침 방지 */
+                font-size: 0.55rem !important; /* 최대한 작게 줄임 */
                 margin-top: 5px !important; 
-                letter-spacing: 1px; 
+                letter-spacing: 0.5px !important; /* 글자 간격도 줄여서 넘침 방지 */
                 white-space: nowrap !important; /* Tagline 한 줄 강제 유지 */
             }
             
@@ -410,6 +410,7 @@
             }
             .resilience-card-full {
                 padding: 20px;
+                text-align: center !important; /* 카드 내부 텍스트 중앙 정렬 */
             }
 
             /* 7. 봉사활동/코딩 미디어 수직 정렬 */
@@ -423,9 +424,13 @@
                 min-width: auto;
             }
             
-            /* 8. 텍스트 정렬 (수정됨: left -> center) */
+            /* 8. 텍스트 정렬 - 모든 텍스트 블록과 내부 텍스트를 중앙 정렬 */
+            .text-block {
+                 text-align: center !important; /* text-block 컨테이너 자체 중앙 정렬 */
+            }
             .text-block p {
-                text-align: center !important; /* 모바일에서 중앙 정렬로 변경 */
+                /* p 태그도 중앙 정렬 재강제 */
+                text-align: center !important; 
                 padding: 0 5px;
             }
             /* Vision 섹션의 텍스트는 중앙 정렬 유지 */
@@ -468,162 +473,3 @@
 <div class="growth-story-image-wrap story-image">
 <figure>
 <img src="pectus_excavatum_surgery.jpg" alt="A photo representing Pectus Excavatum corrective surgery and recovery.">
-<figcaption>The titanium bar was inserted for two years to correct my sunken sternum.</figcaption>
-</figure>
-</div>
-</div>
-<div class="resilience-card-full">
-<h3>Resilience Forged in Challenges</h3>
-<p>The failure at the swimming pool led to the ultimate decision to undergo surgery. The pain and endurance required during recovery taught me that **persistence leads to a stronger version of myself**, both physically and mentally.</p></div>
-</section>
-
-<section id="tech" style="background-color: #fff;">
-<h2>💻 Coding, Problem-Solving, and Possibility</h2>
-<div class="card-container">
-<div class="card">
-<h3>The Logic of Code</h3>
-<p>Since the third grade, I started learning Python and gradually explored various programming languages. At first, it was difficult, but as I began to understand the logic behind the code and saw the results of my work, I started to feel a strong sense of enjoyment and achievement.</p>
-<p>I’ve learned HTML, JavaScript, Python, C, and C++, and what I discovered is that more important than the languages themselves is the way you think about and solve problems. **Debugging helped me develop persistence and logical thinking.**</p>
-</div>
-<div class="card">
-<h3>Future Foundation</h3>
-<p>Though I don’t yet have a strong portfolio, I believe the learning experiences I’ve accumulated will become the foundation for future growth. I’m especially interested in **game development** and have been practicing steadily. I've created simple websites, worked on coding projects, and I'm preparing to release a small game soon.</p>
-<div class="tags">
-<span class="tag">Python</span>
-<span class="tag">C/C++</span>
-<span class="tag">HTML/JS</span>
-<span class="tag">Game Dev</span>
-</div>
-<video controls autoplay muted loop class="game-video">
-<source src="game_video.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-<a href="[Game_Portfolio_Link_Here]" class="portfolio-btn" target="_blank">Game Portfolio (View)</a>
-</div>
-</div>
-
-<h2 style="margin-top: 80px;">🤝 A Project Born from Sharing</h2>
-<div class="content-grid">
-<div class="text-block" style="grid-column: 1 / span 2;">
-<p>Since entering middle school, I have participated in various volunteer activities related to the environment, libraries, and a community-sharing fridge. One experience that left a lasting impression on me was the **sharing fridge project**. I cooked meals at home and delivered them to a welfare center, where they were stored and repackaged for people in need.</p>
-<p>This experience made me feel the **true warmth of sharing**, and I began to think, "How can I expand this kind of volunteering to reach more people?" This led me to the idea of using data to better match those who need help with available resources.</p>
-<p style="font-weight: bold; color: var(--accent);">My Vision:</p>
-<p>As a result, I began to envision an **AI-based resource-matching system** for community-sharing fridges. I hope to become someone who can deliver kindness and warmth to the world through technology.</p>
-</div>
-</div>
-<div class="project-media-container">
-<div class="slideshow-container" id="volunteerSlideshow">
-<div class="mySlides volunteer fade">
-<img src="volunteer_1.jpg" alt="Dongwook delivering food to a welfare center.">
-<div class="image-caption">Delivering home-cooked meals for the sharing fridge.</div>
-</div>
-<div class="mySlides volunteer fade">
-<img src="volunteer_2.jpg" alt="Dongwook cooking or preparing food for charity.">
-<div class="image-caption">Dongwook cooking or preparing food for charity.</div>
-</div>
-<div class="mySlides volunteer fade">
-<img src="volunteer_3.jpg" alt="Dongwook cooking or preparing food for charity.">
-<div class="image-caption">Preparing meals for those in need.</div>
-</div>
-<div class="mySlides volunteer fade">
-<img src="volunteer_4.jpg" alt="Dongwook and community members working together."><div class="image-caption">Community outreach and teamwork.</div></div><div class="mySlides volunteer fade">
-<img src="volunteer_5.jpg" alt="Various Volunteer Certificates"><div class="image-caption">Various Volunteer Certificates</div></div></div>
-<figure class="coding-video-figure">
-<video controls autoplay muted loop class="coding-video">
-<source src="ai_matching_code_video.mp4" type="video/mp4">
-Your browser does not support the video tag.</video>
-<figcaption style="margin-top: 10px; font-size: 1rem; color: var(--primary);">
-Developing the AI-based resource matching system inspired by the sharing fridge.</figcaption>
-<a href="[Coding_Portfolio_Link_Here]" class="portfolio-btn" target="_blank" style="margin-top: 15px;">Coding Project Details (View)</a>
-</figure>
-</div>
-</section>
-
-<section id="life">
-<h2>🎨 Art and Connection</h2>
-<div class="content-grid">
-<div class="text-block life-card">
-<h3>Joy in Friendship and Learning</h3>
-<p>I’ve had a close group of friends since elementary school. We still have pajama parties and talk about our worries and dreams. Some of my friends started aiming to study abroad, and that meant needing better grades.</p>
-<p>When one of them was struggling with math, I gave him a math workbook as a birthday present, and we started studying together. Since I attend a different school with a different exam schedule, I prepared and printed practice materials for my friends to help them study. We studied together at a local café, and their hard work **inspired me as well**. The memories we made through studying are more than just academic—are cherished parts of my life.</p>
-</div>
-<div class="text-block life-card">
-<h3>Artistic Freedom</h3>
-<p>My mother is an **artist**, and from a young age, my brother and I were surrounded by creative experiences. When we were little, we wore firefighter costumes and played games where we used water guns to **"put out fires" we had drawn on the bathroom walls**.</p>
-<p>As we got older, my mother ordered large canvases that filled our living room, and over several months, we each completed a personal artwork. I became fascinated by drawing faces. She taught me that different artists can express the same face in entirely different ways. Through her guidance, I learned to appreciate **freedom in expression and the beauty of individual style**.</p>
-</div>
-</div>
-<div class="slideshow-container" id="artSlideshow">
-<div class="mySlides art fade">
-<img src="art_1.jpg" alt="Boy painting faces on a large yellow canvas.">
-<div class="image-caption">Working on the large canvas: 'Faces of Diversity'.</div>
-</div>
-<div class="mySlides art fade">
-<img src="art_2.jpg" alt="Boy sitting, adding detail to a large yellow canvas filled with abstract faces.">
-<div class="image-caption">Focusing on abstract portraiture.</div>
-</div>
-<div class="mySlides art fade">
-<img src="art_3.jpg" alt="Finished artwork representing individual style.">
-<div class="image-caption">Completed canvas emphasizing expression and diversity.</div>
-</div>
-<div class="mySlides art fade">
-<img src="art_4.jpg" alt="Boy drawing a colorful portrait on a digital screen.">
-<div class="image-caption">Exploring digital art and modern expression.</div>
-</div>
-<div class="mySlides art fade">
-<img src="art_5.jpg" alt="Dongwook and his brother with their completed canvases.">
-<div class="image-caption">Personal artworks completed with my old brother.</div>
-</div>
-</div>
-</section>
-
-<section id="vision" class="vision">
-<h2>🏫 The School I Dream Of</h2>
-<div class="quote">
-"I hope to grow into someone who embraces my own color<br>and gives back what I’ve learned to others."
-</div>
-<p style="max-width: 600px; margin: 0 auto; color: #666;">
-I want to attend a school where diverse thoughts are respected, where I can grow by learning and taking on new challenges with others. I believe this school will help me shape my story into something even greater.
-</p>
-</section>
-
-<footer>
-<p>&copy; 2024 Dongwook Ham. All rights reserved.</p>
-<p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">Technology driven by Compassion.</p>
-</footer>
-
-
-<script>
-// JavaScript for the Slideshows
-let volunteerSlideIndex = 0;
-let artSlideIndex = 0;
-
-function showSlides(containerId, index, className) {
-let i;
-let slides = document.querySelectorAll(`#${containerId} .${className}`);
-for (i = 0; i < slides.length; i++) {
-slides[i].style.display = "none";
-}
-index++;
-if (index > slides.length) {
-index = 1; // Loop back to the first slide
-}
-slides[index - 1].style.display = "block";
-// Update the correct index variable and set timeout for recurrence
-// 슬라이드 전환 속도: 1500ms (1.5초)
-const speed = 1500;
-
-if (containerId === 'volunteerSlideshow') {
-volunteerSlideIndex = index;
-setTimeout(() => showSlides('volunteerSlideshow', volunteerSlideIndex, 'volunteer'), speed);
-} else if (containerId === 'artSlideshow') {
-artSlideIndex = index;
-setTimeout(() => showSlides('artSlideshow', artSlideIndex, 'art'), speed);
-}
-}
-// Initial call for both slideshows
-showSlides('volunteerSlideshow', 0, 'volunteer');
-showSlides('artSlideshow', 0, 'art');
-</script>
-</body>
-</html>
