@@ -501,8 +501,8 @@
                 <p>Though I don’t yet have a strong portfolio, I believe the learning experiences I’ve accumulated will become the foundation for future growth. I’m especially interested in **game development** and have been practicing steadily. I've created simple websites, worked on coding projects, and I'm preparing to release a small game soon.</p>
                 
                 <div class="video-wrapper js-video-container">
-                    <video controls class="game-video">
-                        <source src="game_video.mp4" type="video/mp4">
+                    <video controls class="game-video" preload="metadata">
+                        <source src="game_video.mp4#t=0.001" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     <div class="play-button-overlay">
@@ -551,9 +551,9 @@
             </div>
 
             <figure class="coding-video-figure">
-                <div class="video-wrapper js-video-container">
+                <div class="video-wrapper js-video-container" preload="metadata">
                     <video controls class="coding-video">
-                        <source src="ai_matching_code_video.mp4" type="video/mp4">
+                        <source src="ai_matching_code_video.mp4#t=0.001" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     <div class="play-button-overlay">
@@ -684,4 +684,5 @@
     </script>
 </body>
 </html>
+
 
