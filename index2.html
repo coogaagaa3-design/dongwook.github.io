@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korea Shared Fridge Location Planner</title>
+
+    <!-- 1. Tailwind CSS (Styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 2. Leaflet (Map) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- 3. Font (Google Fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- 4. Chart.js (Visualization) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        /* Leaflet needs a real computed height for the map container */
+        #map {
+            height: 100%;
+            min-height: 320px;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        .map-container {
+            height: 100%;
+            width: 100%;
+            border-radius: 1rem;
+            z-index: 0;
+        }
+
+        /* Gauge Animation */
+        .gauge-fill {
+            transition: width 1s ease-in-out, background-color 0.5s;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen text-slate-800 overflow-x-hidden overflow-y-auto md:overflow-hidden flex flex-col">
+
+    <!-- Header -->
+    <header class="h-16 flex items-center px-4 md:px-8 border-b border-indigo-100 glass z-50 justify-between shrink-0">
+        <div class="flex items-center gap-2">
+            <span class="text-3xl">🧊</span>
+            <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                Korea Shared Fridge Platform
+            </h1>
+        </div>
+        <div class="text-xs md:text-sm font-medium text-slate-500 text-right leading-snug max-w-[12rem] md:max-w-none">
+            Data-based planning for shared fridge locations
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col md:flex-row p-4 gap-4 md:h-[calc(100vh-4rem)] min-h-[calc(100dvh-4rem)]">
+
+        <!-- Left: Map Section -->
+        <section class="flex-[2] relative rounded-2xl shadow-xl border border-white overflow-hidden group min-h-[320px] h-[50vh] md:h-auto md:min-h-0"></section>
+            <div id="map" class="map-container absolute inset-0"></div>
+
+            <!-- Map Overlay Info -->
+            <div class="absolute top-4 left-4 glass px-4 py-2 rounded-lg text-xs font-semibold text-slate-600">
+                🖱️ Click an area to load data (Demo: Busan)
+            </div>
+        </section>
+
+        <!-- Right: Diagnostic Panel -->
+        <aside class="flex-1 min-w-0 md:min-w-[360px] flex flex-col gap-4 font-sans md:h-full md:overflow-y-auto pr-0 md:pr-1">
+
+            <!-- Card 1: Region Info Input -->
+            <div class="glass rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <span>📍</span> Area Check
+                    </h2>
+                    <input type="text" id="region-name"
+                        class="bg-blue-50 text-blue-700 px-3 py-1 rounded-lg text-sm font-bold text-right outline-none focus:ring-2 focus:ring-blue-300 w-40"
+                        value="Type here">
+                </div>
+
+                <!-- Input Form -->
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-xs font-semibold text-slate-500 mb-1 block">Total population</label>
+                        <input type="number" id="input-pop"
+                            class="w-full bg-white/50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition"
+                            value="3300000">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-500 mb-1 block">Seniors (age 65+)</label>
+                        <input type="number" id="input-elderly"
+                            class="w-full bg-white/50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition"
+                            value="700000">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-500 mb-1 block">Shared fridges (auto count)</label>
+                        <input type="number" id="input-fridge"
+                            class="w-full bg-slate-100 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-500 outline-none"
+                            value="0" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Analysis Result -->
+            <div class="glass rounded-2xl p-6 flex-1 flex flex-col gap-4 relative overflow-hidden">
+                <h2 class="text-lg font-bold text-slate-800">📊 Priority Analysis</h2>
+
+                <!-- Score Display -->
+                <div class="flex flex-col items-center justify-center py-4">
+                    <div class="relative w-48 h-24 overflow-hidden mb-2">
+                        <div
+                            class="absolute w-48 h-48 rounded-full bg-slate-200 top-0 border-[20px] border-slate-100 box-border">
+                        </div>
+                        <div id="gauge-arc"
+                            class="absolute w-48 h-48 rounded-full top-0 border-[20px] border-transparent border-t-blue-500 border-r-blue-500 box-border transition-all duration-1000 rotate-[-135deg]"
+                            style="transform: rotate(-135deg);"></div>
+                    </div>
+                    <div class="text-center mt-[-10px]">
+                        <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Priority score</span>
+                        <div class="flex items-end justify-center gap-1">
+                            <span id="score-value" class="text-5xl font-extrabold text-slate-800">0</span>
+                            <span class="text-lg text-slate-400 mb-1">/ 100</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diagnosis Text -->
+                <div id="diagnosis-box" class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+                    <h3 class="text-red-700 font-bold text-sm mb-1">🚨 Install urgently (Critical)</h3>
+                    <p class="text-red-600 text-xs leading-relaxed">
+                        Too few fridges for the number of seniors.<br>
+                        Risk is very high.
+                    </p>
+                </div>
+
+                <!-- Spacer -->
+                <div class="flex-1"></div>
+            </div>
+
+            <!-- Card 3: Fridge Management -->
+            <div class="glass rounded-2xl p-6 flex-1 flex flex-col gap-4 overflow-hidden">
+                <div class="flex justify-between items-end">
+                    <h2 class="text-lg font-bold text-slate-800">🧊 Fridge List</h2>
+                    <span class="text-xs text-slate-500">Manage in list</span>
+                </div>
+
+                <!-- Helper Text -->
+                <div class="text-[10px] text-slate-500 bg-slate-100 p-2 rounded">
+                    This list shows real fridges and virtual fridges.<br>
+                    Use the button below to add a virtual fridge.
+                </div>
+
+                <!-- Scrollable List -->
+                <div id="fridge-list"
+                    class="flex-1 overflow-y-auto min-h-[100px] border border-slate-100 rounded-lg p-2 bg-white/40">
+                    <div class="flex items-center justify-center h-full text-slate-400 text-xs">
+                        Choose an area on the map.
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button onclick="addVirtualFridge()"
+                    class="w-full py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-lg font-bold text-sm shadow-md transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <span>➕</span> Add virtual fridge (Simulation)
+                </button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Script Logic -->
+    <script>
+        // === 1. Map Initialization (Leaflet) ===
+        const map = L.map('map').setView([35.1795543, 129.0756416], 11); // Center on Busan
+        // Fix: ensure Leaflet recalculates size after layout is ready (mobile / resize)
+        requestAnimationFrame(() => map.invalidateSize());
+        setTimeout(() => map.invalidateSize(), 150);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }).addTo(map);
+
+        // === Busan Real Data (16 Districts) ===
+        const regions = [
+            { name: "부산진구", enName: "Busanjin-gu", lat: 35.163, lng: 129.053, pop: 350426, elderly: Math.round(350426 * 0.2117), fridge: 1 },
+            { name: "해운대구", enName: "Haeundae-gu", lat: 35.163, lng: 129.163, pop: 377199, elderly: Math.round(377199 * 0.1974), fridge: 1 },
+            { name: "부산 중구", enName: "Jung-gu", lat: 35.106, lng: 129.032, pop: 41145, elderly: Math.round(41145 * 0.2791), fridge: 0 },
+            { name: "부산 사하구", enName: "Saha-gu", lat: 35.104, lng: 128.974, pop: 303000, elderly: Math.round(303000 * 0.2160), fridge: 1 },
+            { name: "부산 남구", enName: "Nam-gu", lat: 35.136, lng: 129.084, pop: 258062, elderly: Math.round(258062 * 0.2164), fridge: 1 },
+            { name: "부산 영도구", enName: "Yeongdo-gu", lat: 35.091, lng: 129.067, pop: 109889, elderly: Math.round(109889 * 0.2884), fridge: 1 },
+            { name: "부산 금정구", enName: "Geumjeong-gu", lat: 35.243, lng: 129.092, pop: 227484, elderly: Math.round(227484 * 0.2292), fridge: 1 },
+            { name: "부산 동래구", enName: "Dongnae-gu", lat: 35.204, lng: 129.083, pop: 267292, elderly: Math.round(267292 * 0.2065), fridge: 1 },
+            { name: "부산 북구", enName: "Buk-gu", lat: 35.197, lng: 128.990, pop: 275580, elderly: Math.round(275580 * 0.1999), fridge: 1 },
+            { name: "부산 수영구", enName: "Suyeong-gu", lat: 35.145, lng: 129.113, pop: 170007, elderly: Math.round(170007 * 0.2392), fridge: 1 },
+            { name: "부산 서구", enName: "Seo-gu", lat: 35.097, lng: 129.024, pop: 104824, elderly: Math.round(104824 * 0.2660), fridge: 1 },
+            { name: "부산 연제구", enName: "Yeonje-gu", lat: 35.176, lng: 129.079, pop: 199751, elderly: Math.round(199751 * 0.2177), fridge: 1 },
+            { name: "부산 사상구", enName: "Sasang-gu", lat: 35.152, lng: 128.991, pop: 206948, elderly: Math.round(206948 * 0.2055), fridge: 1 },
+            { name: "부산 기장군", enName: "Gijang-gun", lat: 35.244, lng: 129.222, pop: 174501, elderly: Math.round(174501 * 0.1731), fridge: 1 },
+            { name: "부산 동구", enName: "Dong-gu", lat: 35.129, lng: 129.045, pop: 85918, elderly: Math.round(85918 * 0.2798), fridge: 2 },
+            { name: "부산 강서구", enName: "Gangseo-gu", lat: 35.212, lng: 128.980, pop: 143734, elderly: Math.round(143734 * 0.1218), fridge: 1 }
+        ];
+
+        // State
+        let currentRegion = { name: "Custom Area", enName: "Custom Area", enName: "Custom Area", pop: 0, elderly: 0, fridge: 0 }; // Default custom
+        let virtualFridges = 0;
+
+        regions.forEach(data => {
+            // Color marker based on simple urgency check
+            const elderlyRatio = data.elderly / data.pop;
+            const isUrgent = (elderlyRatio > 0.25 && data.fridge < 2);
+
+            const marker = L.marker([data.lat, data.lng], {
+                // Simple custom icon or default (keeping default for simplicity)
+            }).addTo(map);
+
+            marker.bindPopup(`<b>${data.enName}</b><br>Population: ${data.pop.toLocaleString()}<br>Fridges: ${data.fridge}`);
+            marker.on('click', () => selectRegion(data));
+        });
+
+        function selectRegion(data) {
+            currentRegion = data;
+            virtualFridges = 0; // Reset simulation
+
+            document.getElementById('region-name').value = data.enName; // Input field
+            document.getElementById('input-pop').value = data.pop;
+            document.getElementById('input-elderly').value = data.elderly;
+
+            // Render Fridge List
+            renderFridgeList(data.fridge);
+            calculateScore();
+        }
+
+        function refreshMapSize() {
+            map.invalidateSize();
+        }
+        window.addEventListener('resize', refreshMapSize);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(refreshMapSize, 200);
+        });
+
+
+        // Handle Custom Input
+        document.getElementById('region-name').addEventListener('input', (e) => {
+            // If user types, keep stats but update the display name
+            currentRegion.enName = e.target.value || 'Custom Area';
+        });
+
+        function renderFridgeList(baseCount) {
+            const listEl = document.getElementById('fridge-list');
+            listEl.innerHTML = ''; // Clear
+
+            // 1. Existing Fridges
+            for (let i = 0; i < baseCount; i++) {
+                addListPosition(listEl, `${currentRegion.enName} Site ${i + 1}`, false);
+            }
+
+            // 2. Virtual Fridges
+            for (let i = 0; i < virtualFridges; i++) {
+                addListPosition(listEl, `[NEW] Virtual Site ${baseCount + i + 1}`, true);
+            }
+
+            // Update Input (Read-only view mostly)
+            document.getElementById('input-fridge').value = baseCount + virtualFridges;
+        }
+
+        function addListPosition(container, name, isVirtual) {
+            const li = document.createElement('div');
+            li.className = `flex justify-between items-center p-2 rounded mb-2 ${isVirtual ? 'bg-indigo-50 border border-indigo-200' : 'bg-slate-50 border border-slate-200'}`;
+
+            li.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <span class="text-lg">${isVirtual ? '✨' : '🧊'}</span>
+                    <span class="text-sm font-medium ${isVirtual ? 'text-indigo-700' : 'text-slate-700'}">${name}</span>
+                </div>
+                ${isVirtual ? `
+                <button onclick="removeVirtualFridge()" class="text-red-500 hover:text-red-700 text-xs font-bold px-2">
+                    Remove
+                </button>` : ''}
+            `;
+            container.appendChild(li);
+        }
+
+        function addVirtualFridge() {
+            if (!currentRegion) return alert("Please choose an area on the map first!");
+            virtualFridges++;
+            renderFridgeList(currentRegion.fridge);
+            calculateScore();
+        }
+
+        function removeVirtualFridge() {
+            if (virtualFridges > 0) {
+                virtualFridges--;
+                renderFridgeList(currentRegion.fridge);
+                calculateScore();
+            }
+        }
+
+        function calculateScore() {
+            // Get Values
+            const pop = parseInt(document.getElementById('input-pop').value) || 1;
+            const elderly = parseInt(document.getElementById('input-elderly').value) || 0;
+            const fridge = parseInt(document.getElementById('input-fridge').value) || 0;
+
+            // Algorithm: 
+            // 1. Demand = Elderly Ratio (Proxy for need)
+            //    - Normalize: 30% elderly = 100 points
+            const elderlyRatio = elderly / pop;
+            const demandScore = Math.min((elderlyRatio / 0.30) * 100, 100);
+
+            // 2. Supply = Fridge Count
+            //    - 1 fridge reduces risk by 20 points
+            const supplyBefore = fridge * 20;
+
+            // 3. Final Priority score (Higher = More Urgent)
+            let score = Math.max(0, Math.round(demandScore - supplyBefore));
+
+            animateGauge(score);
+            updateDiagnosis(score);
+
+            return score;
+        }
+
+        // === 3. Simulation Logic ===
+        // This function is now replaced by addVirtualFridge and removeVirtualFridge
+        // function simulateAddFridge() {
+        //     const input = document.getElementById('input-fridge');
+        //     let current = parseInt(input.value) || 0;
+        //     input.value = current + 1; // Add 1
+
+        //     // Recalculate with visual feedback
+        //     calculateScore();
+
+        //     // Toast / Animation effect could be added here
+        // }
+
+        // === 4. UI Helpers ===
+        function animateGauge(score) {
+            const valueSpan = document.getElementById('score-value');
+            const gaugeArc = document.getElementById('gauge-arc');
+
+            // Animate Number
+            let start = parseInt(valueSpan.innerText);
+            let end = score;
+            let duration = 500;
+            let startTime = null;
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = Math.min((timestamp - startTime) / duration, 1);
+                valueSpan.innerText = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            }
+            window.requestAnimationFrame(step);
+
+            // Rotate Gauge Ring (-135deg to +45deg is full 180 range? 
+            // CSS arc trick: 
+            // -45deg(empty) -> 135deg(full) if using 180deg gauge.
+            // Let's stick to simple color change for now or simple rotation mapping.
+            // Mapping 0-100 to rotation: -135deg (0%) to 45deg (100%)
+            const rotation = -135 + (score / 100) * 180;
+            gaugeArc.style.transform = `rotate(${rotation}deg)`;
+
+            // Color Logic
+            if (score > 70) {
+                gaugeArc.style.borderColor = "#ef4444 transparent transparent transparent"; // Red
+            } else if (score > 40) {
+                gaugeArc.style.borderColor = "#eab308 transparent transparent transparent"; // Yellow
+            } else {
+                gaugeArc.style.borderColor = "#22c55e transparent transparent transparent"; // Green
+            }
+        }
+
+        function updateDiagnosis(score) {
+            const box = document.getElementById('diagnosis-box');
+            // Logic: Stable is < 40. 
+            // Score = Demand - (Fridge * 20).
+            // Gap = Score - 40. 
+            // Needed = Ceil(Gap / 20).
+
+            if (score > 70) {
+                const needed = Math.ceil((score - 40) / 20);
+                box.className = "bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg transition-all";
+                box.innerHTML = `<h3 class="text-red-700 font-bold text-sm mb-1">🚨 Install Now (Critical)</h3>
+                <p class="text-red-600 text-xs">To reach a stable level,<br>we strongly recommend adding at least <strong>${needed}</strong> more fridges.</p>`;
+            } else if (score > 40) {
+                const needed = Math.ceil((score - 40) / 20);
+                box.className = "bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-r-lg transition-all";
+                box.innerHTML = `<h3 class="text-yellow-700 font-bold text-sm mb-1">⚠️ Caution (Warning)</h3>
+                    <p class="text-yellow-600 text-xs">Add <strong>${needed}</strong> more fridge(s) to reach a stable level.</p>`;
+            } else {
+                box.className = "bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg transition-all";
+                box.innerHTML = `<h3 class="text-green-700 font-bold text-sm mb-1">✅ Stable</h3>
+                    <p class="text-green-600 text-xs">Current fridges can handle the demand.<br>Focus on keeping them running well.</p>`;
+            }
+        }
+
+        // Init
+        calculateScore(); // Run once
+        setTimeout(() => map.invalidateSize(), 300);
+    </script>
+</body>
+
+</html>
